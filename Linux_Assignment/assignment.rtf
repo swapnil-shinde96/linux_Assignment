@@ -1,0 +1,776 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fmodern\fprq1 Lucida Console;}}
+{\colortbl ;\red255\green0\blue0;\red255\green255\blue0;\red0\green128\blue0;\red128\green128\blue0;\red0\green255\blue0;\red155\green0\blue211;\red0\green255\blue255;\red28\green168\blue0;\red177\green72\blue198;\red192\green160\blue0;\red0\green242\blue0;\red128\green0\blue0;\red255\green0\blue255;}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 agni.orcsoftware.com\highlight1\par
+\par
+1. How to check a process running with full path information?\par
+\par
+\highlight0 cmd- \highlight2 ls -l /proc/pid/exe\par
+\highlight0 eg.\highlight2\par
+[swapnil.shinde@agni ~]$ ls -l /proc/15487/exe\par
+lrwxrwxrwx 1 swapnil.shinde orcgroup 0 Jul 14 10:45 /proc/15487/exe -> /usr/bin/bash\highlight0\par
+And\par
+\b0 By using ps cmd we can check running process.\par
+options are a u x.\par
+cmd- \highlight2 ps aux \par
+\highlight0 or can use grep command and can give process name \par
+cmd- \highlight2 ps aux | process_name\par
+\highlight0 eg. \par
+\highlight2 [swapnil.shinde@agni swapnil]$ ps -aux\par
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND\par
+root         1  0.0  0.0 191724  4208 ?        Ss   Mar29  51:15 /usr/lib/systemd/systemd --switched-root --system --deserialize 22\par
+root         2  0.0  0.0      0     0 ?        S    Mar29   0:05 [kthreadd]\par
+root         3  0.0  0.0      0     0 ?        S    Mar29   2:18 [ksoftirqd/0]\par
+root         5  0.0  0.0      0     0 ?        S<   Mar29   0:00 [kworker/0:0H]\par
+root         7  0.7  0.0      0     0 ?        S    Mar29 1154:51 [rcu_sched]\par
+root         8  0.0  0.0      0     0 ?        S    Mar29   0:00 [rcu_bh]\par
+root         9  0.1  0.0      0     0 ?        S    Mar29 252:38 [rcuos/0]\par
+root        10  0.0  0.0      0     0 ?        S    Mar29   0:00 [rcuob/0]\par
+root        11  0.0  0.0      0     0 ?        S    Mar29   0:00 [migration/0]\par
+root        12  0.0  0.0      0     0 ?        S    Mar29   0:55 [watchdog/0]\par
+root        13  0.0  0.0      0     0 ?        S    Mar29   0:49 [watchdog/1]\par
+root        14  0.0  0.0      0     0 ?        S    Mar29   0:00 [migration/1]\par
+root        15  0.0  0.0      0     0 ?        S    Mar29   1:24 [ksoftirqd/1]\par
+root        17  0.0  0.0      0     0 ?        S<   Mar29   0:00 [kworker/1:0H]\par
+root        18  0.0  0.0      0     0 ?        S    Mar29  40:21 [rcuos/1]\par
+root        19  0.0  0.0      0     0 ?        S    Mar29   0:00 [rcuob/1]\par
+root        20  0.0  0.0      0     0 ?        S    Mar29   0:49 [watchdog/2]\par
+root        21  0.0  0.0      0     0 ?        S    Mar29   0:00 [migration/2]\par
+\par
+\highlight3 2. Using vi editor, how to globally replace a string?\highlight4\par
+\par
+\highlight0 ans - to open vi editor --   \highlight2 vi filename\par
+\highlight0 then cmd -    \highlight2 :%s/old_string/new_string/g\par
+\highlight0 (cmd begines with \highlight2 :\highlight0 (colon) then \highlight2 %\highlight0  then \highlight2 s\highlight0  \highlight2 /\highlight0  \highlight2 old /\highlight0  \highlight2 new /\highlight0  then \highlight2 g\highlight0  for global replace )\par
+to save and escape from vi editor \highlight2 :wq\par
+\fs24\par
+\highlight3\fs28 3. How to search for a string in all files under a folder and sub-folders?\highlight4\fs32\par
+\highlight0\fs28\par
+ans - \highlight2 grep -r "string" filename \highlight0 or filepath(if file is in another directory)\par
+\highlight2\par
+\highlight0 options:  -c   :to display no of matched lines\par
+                 -h    :display matched line and hide filename\par
+                 -i      :ignore capital or small letter(camelcase will not be                                                                            \tab\tab    considered)\par
+                 -l       :display list of file and not lines\par
+                -n      :display line and line no\par
+                -r       :recursive(to traverse all directories and sub directories)\par
+\par
+eg.\par
+\highlight2 [swapnil.shinde@agni ~]$ grep "free" swapnil/op.txt\par
+              total        used        free      shared  buff/cache   available\par
+\par
+[swapnil.shinde@agni ~]$ grep \highlight5 -r \highlight2 free swapnil\par
+Binary file swapnil/assignment.rtf matches\par
+swapnil/op.txt:              tot        used        free      shared  buff/cache   available\par
+\par
+\highlight0 with option -c\par
+\par
+\highlight2 [swapnil.shinde@agni ~]$ grep -c "free" swapnil/op.txt\par
+1\par
+\par
+\par
+\par
+\par
+\par
+\highlight3 4. How to remove control-m characters? Refer file /home/srinivasan.r/unix/ctrlm.txt on agni server which contains these characters.\par
+\par
+\highlight0 ans-\par
+This problem encounters when you directly copy file from windows to linux.\par
+In windows because of extra spaces and tabs, it fills by with illegal characters or  by control-m characters in linux.\par
+we can remove it by using \par
+1. Using VI Editor \par
+cmd-         \highlight2 :%s/^M//g\par
+\highlight0 (to write ^M in vi editor dont use ctrl+6 and M. Use \highlight2 ctrl+V \highlight0 and then \highlight2 ctrl+M\highlight0 )\par
+\par
+2. Using sed cmd\par
+\par
+cmd-  \highlight2 sed 's/^M//g' filename\par
+\par
+\fs32\par
+\highlight3\fs28 5. How to redirect the output of a command to a file output.txt\par
+and errors to another file errors.txt ?\par
+\highlight0\par
+\par
+ans-\par
+To redirect output of command to file.txt \par
+cmd-   \highlight2 cmd > filename.txt\par
+\par
+\highlight0 eg.\par
+\highlight2 [swapnil.shinde@agni swapnil]$ pwd > output.txt\par
+[swapnil.shinde@agni swapnil]$ cat output.txt\par
+/home/swapnil.shinde/swapnil\par
+\par
+\highlight0 if filename.txt does not exist then it will create that file and will store the output of given cmd to that file.\par
+And if file already exist then it will replace its old data with cmd output.\par
+\par
+\highlight3 6. How to redirect the output of a command and append to the\par
+file?\par
+\par
+\highlight0 Ans- If we want to append given cmd output with old file data then use cmd\par
+cmd-   \highlight2 cmd>>filename.txt \par
+\par
+\highlight0 eg.\highlight2\par
+[swapnil.shinde@agni swapnil]$ free >> output.txt\par
+[swapnil.shinde@agni swapnil]$ cat output.txt\par
+/home/swapnil.shinde/swapnil\par
+              total        used        free      shared  buff/cache   available\par
+Mem:       16166420    13310544      496388      181616     2359488     2494792\par
+Swap:       8257532     1075260     7182272\par
+\par
+\highlight0 if want to redirect error into file \par
+cmd-  \highlight2 cmd 2> filename.txt\par
+\highlight0 eg.\par
+(below output2.txt file does not exist)\highlight2\par
+[swapnil.shinde@agni swapnil]$ cat output2.txt 2> errorfile.txt\par
+[swapnil.shinde@agni swapnil]$ cat errorfile.txt\par
+cat: output2.txt: No such file or directory\par
+\highlight3\par
+\highlight1 7. How to redirect STDERR to STDOUT\highlight3\par
+\highlight2\par
+\highlight0 Ans- If want to store both output or error to file \par
+cmd-  \highlight2 cmd >> filename 2>&1\par
+\highlight0 eg.\highlight2\par
+[swapnil.shinde@agni swapnil]$ pwd >> output3.txt 2>&1\par
+[swapnil.shinde@agni swapnil]$ cat output3.txt\par
+/home/swapnil.shinde/swapnil\par
+[swapnil.shinde@agni swapnil]$ cat \highlight1 file.txt \highlight2 >> output3.txt 2>&1 \highlight0 (here file.txt doesnot exist)\par
+\highlight2 [swapnil.shinde@agni swapnil]$ cat output3.txt\par
+/home/swapnil.shinde/swapnil\par
+cat: file.txt: No such file or directory\par
+\par
+\highlight3 8. How to find memory usage on a unix system?\par
+\par
+\highlight0 By using free cmd we can check memory usage of system\par
+cmd- \highlight2 free or vmstat\par
+\par
+[swapnil.shinde@agni ~]$ free\par
+              total        used        free      shared  buff/cache   available\par
+Mem:       16166420    13311884      479708      182700     2374828     2492472\par
+Swap:       8257532     1073816     7183716\par
+\par
+[swapnil.shinde@agni ~]$ vmstat\par
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----\par
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st\par
+ 0  0 1073816 478264   5376 2370088    0    0     1    12    0    0  1  1 99  0  0\par
+\par
+\highlight5 9. How to find how you are logged in as\par
+\par
+\highlight0 cmd- \highlight2 whoami\par
+\highlight0 eg.\highlight2\par
+[swapnil.shinde@agni ~]$ whoami\par
+swapnil.shinde\par
+\par
+\highlight3 10. How to find the type of machine you are currently on and\par
+name of the machine\par
+\highlight0 ans-\par
+by using cmd \highlight2 hostname\par
+\highlight0 eg\highlight2\par
+[swapnil.shinde@agni ~]$ hostname\par
+agni.orcsoftware.com\par
+\par
+\highlight0 by using cmd \highlight2 hostnamectl\par
+\highlight0 eg\par
+\highlight2 [swapnil.shinde@agni ~]$ hostnamectl\par
+   Static hostname: agni.orcsoftware.com\par
+         Icon name: computer-vm\par
+           Chassis: vm\par
+        Machine ID: bf89e851bf9b409c8e47739f9b1e38a3\par
+           Boot ID: 5bccc3978e03419cacc68c808867c64e\par
+    Virtualization: vmware\par
+  Operating System: Oracle Linux Server 7.6\par
+       CPE OS Name: cpe:/o:oracle:linux:7:6:server\par
+            Kernel: Linux 4.1.12-124.26.10.el7uek.x86_64\par
+      Architecture: x86-64\par
+\par
+\highlight5\par
+11. How to find out if a particular port is being used\par
+\highlight0 ans-\par
+\highlight2 netstat --listen | less\par
+\highlight0 eg.\par
+\highlight2 [swapnil.shinde@agni ~]$ netstat --listen|less\par
+Active Internet connections (only servers)\par
+Proto Recv-Q Send-Q Local Address           Foreign Address         State\par
+tcp        0      0 0.0.0.0:52699           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:46366           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:5342            0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:kfserver        0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:41216           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:60224           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:xkotodrcp       0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:53441           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:59841           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:34273           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:42465           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:47969           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:37985           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:45474           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:5666            0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:59203           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:42243           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:53123           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:55715           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:56355           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:56836           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:41349           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:47685           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:hpvmmdata       0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:39334           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:51206           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:33415           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:55623           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:41863           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:45959           0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:saphostctrl     0.0.0.0:*               LISTEN\par
+tcp        0      0 0.0.0.0:57448           0.0.0.0:*               LISTEN\par
+\highlight1\par
+12. How do seperate a process from the current running shell so that it continues to run even after the user logs out.\par
+\highlight5\par
+\highlight2 Ans:- Ctrl + Z then run bg to put your most recent suspended task to\par
+background, allowing it to continue running. It will keep the process running after you\par
+log out.\par
+\par
+\highlight5 13. How do you know how much disk is available?\par
+\par
+\highlight0 Ans:- Check Linux Disk Space Using \highlight2 df \highlight0 Command.\par
+eg.\par
+\highlight2 [swapnil.shinde@agni ~]$ df\par
+Filesystem                 1K-blocks      Used Available Use% Mounted on\par
+devtmpfs                     8071772         0   8071772   0% /dev\par
+tmpfs                        8083208    195896   7887312   3% /dev/shm\par
+tmpfs                        8083208      1188   8082020   1% /run\par
+tmpfs                        8083208         0   8083208   0% /sys/fs/cgroup\par
+/dev/mapper/ol-root         52403200  36863616  15539584  71% /\par
+/dev/sda1                    1038336    252728    785608  25% /boot\par
+/dev/mapper/ol-cores        52403200     68836  52334364   1% /cores\par
+/dev/mapper/ol-opt_tbricks 461148160 273796248 187351912  60% /opt/tbricks\par
+tmpfs                        1616644         0   1616644   0% /run/user/36779\par
+tmpfs                        1616644         0   1616644   0% /run/user/37933\par
+tmpfs                        1616644         0   1616644   0% /run/user/37927\par
+tmpfs                        1616644         0   1616644   0% /run/user/37931\par
+tmpfs                        1616644         0   1616644   0% /run/user/37929\par
+\highlight3\par
+14. What is the difference between kill -9 and just kill ?\par
+\highlight0 Ans- kill cmd sends a kill signal to terminate any process gracefully. This is safe and default way to terminate any process.\par
+kill-9 cmd sends kill signal to terminate any process immediately. It is forcefull way to terminate nay process.\par
+\highlight3 15. What permissions chmod 710 on a directory do?\par
+\highlight2 chmod\highlight0  cmd is used to change mod i.e. it is used to change file permission.\par
+\par
+in 710\par
+7(first digit) - for owner permission\par
+1(second digit)- for group permission\par
+0(third digit)- for everyone\par
+\par
+1 -execute\par
+2 -write\par
+3 -write and execute\par
+4 -read\par
+5 -read and execute\par
+6 -read and write\par
+7 -read, write and execute\par
+here 710 means owner can read, write and execute(7). Group can execute(1). Everyone can do nothing(0).  \par
+\par
+\highlight3 16. How to run a process in the background ? How to bring it to the\par
+foreground ?\par
+\highlight2 bg\highlight0  - to execute process in background.\par
+\highlight2 fg\highlight0  - to reconnect background job to foreground.\par
+\par
+\highlight3 17. How to find how many times the word \ldblquote hello\rdblquote  occurs in a file.\par
+\par
+\highlight2 [swapnil.shinde@agni swapnil]$ grep total output.txt\par
+              total        total        total      total  buff/total   total\par
+Mem:       total    13310544      496388      181616     2359488     2494792\par
+Swap:       total     1075260     7182272\par
+[swapnil.shinde@agni swapnil]$ grep -o total output.txt\par
+total\par
+total\par
+total\par
+total\par
+total\par
+total\par
+total\par
+total\par
+[swapnil.shinde@agni swapnil]$ grep -o total output.txt|wc -l\par
+8\par
+\highlight3\par
+18. How to check whether a machine is reachable from your machine\par
+\par
+\highlight0 Ans-\par
+By using \highlight2 ping \highlight0 command.\par
+\par
+\highlight3 1. * List number of files in a directory and count lines in each file\par
+\highlight0\par
+cmd-  \highlight2 wc -l `find swapnil -type f` \highlight0 (swapnil is directoryname and -type f as we want to find files)\par
+eg.\par
+\highlight2 [swapnil.shinde@agni ~]$ wc -l `find swapnil -type f`\par
+  3 swapnil/op.txt\par
+  1 swapnil/errorfile.txt\par
+  2 swapnil/output3.txt\par
+  4 swapnil/output.txt\par
+ 10 total\par
+\highlight0\par
+\par
+\par
+\highlight3 2.Find the files which are 5 days older and then zip them \par
+\highlight0\par
+*to find files exact 5 days older\par
+find swapnil -mtime 5 -print\par
+eg. \par
+here all files are created today, hence used 0.\par
+\highlight2 [swapnil.shinde@agni ~]$ find swapnil -mtime 0 -print\par
+swapnil\par
+swapnil/op.txt\par
+swapnil/errorfile.txt\par
+swapnil/output3.txt\par
+swapnil/output.txt\par
+\par
+\highlight0 * to zip the files\par
+\highlight2 [swapnil.shinde@agni ~]$ ls\par
+swapnil\par
+[swapnil.shinde@agni ~]$ zip -r myzipfile swapnil/\par
+  adding: swapnil/ (stored 0%)\par
+  adding: swapnil/op.txt (deflated 40%)\par
+  adding: swapnil/errorfile.txt (stored 0%)\par
+  adding: swapnil/output3.txt (deflated 14%)\par
+  adding: swapnil/output.txt (deflated 49%)\par
+[swapnil.shinde@agni ~]$ ls\par
+myzipfile.zip  swapnil\par
+\par
+\highlight0 *to zip the files which are 5 days older\par
+cmd- \highlight2 zip -r zipfile2 `find swapnil -mtime 5 -print`\par
+\highlight0 eg.\par
+here we take \cf6 0\cf0  instead of \cf6 5\cf0  as all files are created today.\highlight2\par
+[swapnil.shinde@agni ~]$ zip -r \cf1 zipfile2\cf0  `find swapnil -mtime \cf6 0\cf0  -print`\par
+  adding: swapnil/ (stored 0%)\par
+  adding: swapnil/op.txt (deflated 40%)\par
+  adding: swapnil/errorfile.txt (stored 0%)\par
+  adding: swapnil/output3.txt (deflated 14%)\par
+  adding: swapnil/output.txt (deflated 49%)\par
+[swapnil.shinde@agni ~]$ ls\par
+swapnil  \cf1 zipfile2.zip\par
+\cf0\highlight0\par
+\highlight3\par
+3.* read a file and replace 10th appearance of the word "the" to "abc" and write the output in another file\par
+\par
+\highlight0 cmd-  \highlight2 sed 's/the/abc/10' file1.txt > file2.txt\highlight3\par
+\highlight0\par
+eg.\par
+\highlight2 [swapnil.shinde@agni swapnil]$ cat file1.txt\par
+the file 1.the file 2.the file 3.the file 4.the file 5.the file 6.the file 7.the file 8.the file 9.the file 10.the file 11.the file 12.\par
+[swapnil.shinde@agni swapnil]$ sed 's/the/abc/10' file1.txt > file2.txt\par
+[swapnil.shinde@agni swapnil]$ cat file2.txt\par
+the file 1.the file 2.the file 3.the file 4.the file 5.the file 6.the file 7.the file 8.the file 9.abc file 10.the file 11.the file 12.\par
+\highlight0\par
+\par
+\highlight3 4.* list of 5 largest files from any directory\par
+\par
+\highlight0 du             --> to show file space usage. \par
+du -a        --> to show all fiiles with directories\par
+sort          --> to sort contetnt in file alphabetically.\par
+sort -n      --> to sort by numeric value.\par
+sort -r       --> to sort and show output reversly.\par
+head         --> to show first lines of output or piped data. (bydefault 10 lines)\par
+head -n    --> to show specific nos of lines\par
+\par
+final cmd - \highlight2 du -a | sort -n -r | head -n 10 \highlight0\par
+\par
+\highlight2 [swapnil.shinde@agni swapnil]$ du -a | sort -n -r | head -n 5\par
+84      .\par
+24      ./test3\par
+16      ./test2\par
+12      ./test1\par
+4       ./output.txtz\par
+\highlight5\par
+5.* find out the available memory on the server, how long the server has been up and top 5 processes taking max memory of the server\par
+\par
+to find out the available memory on the server\par
+\highlight0 cmd--> \highlight2 free\par
+\highlight0 eg.\highlight2\par
+[swapnil.shinde@agni swapnil]$ free\par
+              total        used        free      shared  buff/cache   available\par
+Mem:       16166420    13090644      515960      233868     2559816     2661056\par
+Swap:       8257532     1437440     6820092\par
+\par
+[swapnil.shinde@agni swapnil]$ free -g\par
+              total        used        free      shared  buff/cache   available\par
+Mem:             15          12           0           0           2           2\par
+Swap:             7           1  \par
+\par
+\highlight5 *how long the server has been up\par
+\par
+\highlight0 cmd--> \highlight2 uptime\par
+\par
+[swapnil.shinde@agni swapnil]$ uptime\par
+ 13:43:58 up 104 days, 18:35,  6 users,  load average: 0.72, 0.56, 0.45\par
+\par
+\highlight5 top 5 processes taking max memory of the server\highlight1\par
+\par
+\highlight0  cmd- \highlight2 ps -aux | sort -nrk +4 | top -n 5\highlight0  \par
+(k +4 is doing on 4th coloum which is for % of memory use and top -n 5 showing top 5 lines )\par
+eg.\par
+\highlight2 [swapnil.shinde@agni ~]$ \highlight7 ps -aux | sort -nrk +4 | head -n 5\par
+\par
+\highlight2 tbricks   5285  1.0 \highlight7 11.6 \highlight2 7363320 1879340 ?     Ssl  Jul10  70:37 /opt/tbricks/persistence/aa_agni_admin_sys_db/packages/tbricks-2.15.0.161/bin/../platform/bin64/beta_ie1 -c /opt/tbricks/persistence/aa_agni_admin_sys_db/configs/e76a1d22-0479-11ea-bbc0-fb8083a993fe.xml -a agni.orcsoftware.com:agni_admin_sys --pidfile /opt/tbricks/persistence/aa_agni_admin_sys_db/pidfiles/e76a1d22-0479-11ea-bbc0-fb8083a993fe.pid\par
+\par
+tbricks  21135  1.9 \highlight7 11.3 \highlight2 21477872844 1831296 ? Ssl  03:31  11:52 /opt/tbricks/persistence/aa_agni_admin_sys_db/packages/combos/lseg_derivatives-2.15.0.157+tbricks-2.15.0.184/asan/bin/../platform/bin64/idem_sail_rj -c /opt/tbricks/persistence/aa_agni_admin_sys_db/configs/5fe0eb1c-4075-11ec-af90-24fc4e0e6fab.xml -a agni.orcsoftware.com:agni_admin_sys --pidfile /opt/tbricks/persistence/aa_agni_admin_sys_db/pidfiles/5fe0eb1c-4075-11ec-af90-24fc4e0e6fab.pid\par
+\par
+tbricks   1501  0.6 \highlight7 10.5 \highlight2 3163436 1707288 ?     Ssl  Jul11  31:31 /opt/tbricks/persistence/aa_agni_admin_sys_db/packages/tbricks-2.15.0.75/bin/../platform/bin64/alpha_is1 -c /opt/tbricks/persistence/aa_agni_admin_sys_db/configs/c01c1b1e-65cb-11e9-91b0-8abf25227297.xml -a agni.orcsoftware.com:agni_admin_sys --pidfile /opt/tbricks/persistence/aa_agni_admin_sys_db/pidfiles/c01c1b1e-65cb-11e9-91b0-8abf25227297.pid\par
+\par
+tbricks  21145  1.8  \highlight7 9.6 \highlight2 21477764896 1556784 ? Ssl  03:31  11:03 /opt/tbricks/persistence/aa_agni_admin_sys_db/packages/combos/lseg_derivatives-2.15.0.157+tbricks-2.15.0.184/asan/bin/../platform/bin64/idem_ksr -c /opt/tbricks/persistence/aa_agni_admin_sys_db/configs/c7a65efa-8f1f-11ec-a660-faac2feff859.xml -a agni.orcsoftware.com:agni_admin_sys --pidfile /opt/tbricks/persistence/aa_agni_admin_sys_db/pidfiles/c7a65efa-8f1f-11ec-a660-faac2feff859.pid\par
+\par
+tbricks   5260  0.6  \highlight7 3.5 \highlight2 1976840 566112 ?      Ssl  Jul10  39:40 /opt/tbricks/persistence/aa_agni_admin_sys_db/packages/tbricks-2.15.0.161/bin/../platform/bin64/beta_is1 -c /opt/tbricks/persistence/aa_agni_admin_sys_db/configs/eab891e6-0476-11ea-bbc0-fb8083a993fe.xml -a agni.orcsoftware.com:agni_admin_sys --pidfile /opt/tbricks/persistence/aa_agni_admin_sys_db/pidfiles/eab891e6-0476-11ea-bbc0-fb8083a993fe.pid\par
+\highlight1\par
+\highlight5 * find out the pid of the process and kill the process gracefully/forcefully\highlight1\par
+\highlight0\par
+to find out pid if you know process name \par
+cmd- \highlight2 ps aux | grep "process_name"\par
+\highlight0 eg.\highlight2\par
+[swapnil.shinde@agni ~]$ ps aux | grep "bash"\par
+swapnil+ 12687  0.0  0.0 126156  3632 pts/1    Ss   10:19   0:00 -bash\par
+swapnil+ 15653  0.0  0.0 112720  2344 pts/1    S+   11:03   0:00 grep --color=auto bash\par
+now notedown the pid and kill the process\par
+\highlight0 eg.\highlight2\par
+kill 15653\par
+\par
+\highlight5 *find out how many users are connected to port 22 on a server\par
+\par
+\highlight0\fs24 for port :80-\highlight5\fs28\par
+\highlight2\fs24 [swapnil.shinde@agni ~]$ netstat | grep :20 | grep ESTABLISHED | wc -l\par
+0\par
+\highlight0\fs28 for port :\highlight2\fs24 34273 \highlight0\fs28 -\highlight5\fs24\par
+\highlight2 [swapnil.shinde@agni ~]$ netstat | grep :34273 | grep ESTABLISHED | wc -l\par
+14\par
+\par
+\highlight5 * copy a file from one server to another (using scp)\par
+\par
+\highlight0 1. copy file from server to local machine\par
+open gitbash on local machine folder where you want to copy file(do gitbash here)\par
+cmd- \par
+scp swapnil.shinde@IP_Address(cmd- \highlight2 hostname -\highlight0 ):(\highlight2 pwd\highlight0 )full_path_of_file_on_server .\par
+(. for current directory on local machine)\par
+eg.\par
+\cf8\highlight2\f1\fs18 swapnil.shinde@CTEC-IND-297 \cf9 MINGW64 \cf10 ~/Desktop\par
+\cf0 $ scp swapnil.shinde@10.76.139.50:/home/swapnil.shinde/pgrm/script1.sh .\par
+swapnil.shinde@10.76.139.50's password:\par
+script1.sh \par
+\par
+\cf8 swapnil.shinde@CTEC-IND-297 \cf9 MINGW64 \cf10 ~/Desktop\par
+\cf0 $ ls\par
+\cf11 script1.sh\cf0 *\par
+\f0\fs28\par
+\highlight5\par
+\highlight0 2.\fs24  copy file from local machine to server\par
+cmd-\par
+scp address_of_file_on_local_machine   swapnil.shinde@IP_Address(cmd- \highlight2 hostname -\highlight0 ):(\highlight2 pwd\highlight0 )full_path_of_file_on_server \par
+eg.\par
+\cf8\highlight2\f1\fs18 swapnil.shinde@CTEC-IND-297 \cf9 MINGW64 \cf10 ~/Desktop\par
+\cf0 $  scp /c/Users/swapnil.shinde/Desktop/script1.sh swapnil.shinde@10.76.139.50:/home/swapnil.shinde/pgrm\par
+swapnil.shinde@10.76.139.50's password:\par
+script1.sh \f0\fs24\par
+\highlight5\fs40\par
+\highlight2\fs24 [swapnil.shinde@agni pgrm]$ ls\par
+script1.sh \par
+\par
+\highlight3\fs36 Script to write ->\par
+\highlight2\fs24\par
+\highlight5 1. write a bash script to print the the present working directory along with its list of files inside\par
+   The current working Directory ->\par
+   The list of files and Subdirectories ->\fs28\par
+\par
+\highlight0 ans->\highlight5\par
+\highlight2\fs24 [swapnil.shinde@agni scripts]$ \highlight7 cat script1.sh\par
+\highlight2 #!/bin/bash\par
+echo\par
+echo The current working directory is\par
+echo $(pwd)\par
+echo\par
+echo The list of subdirectories and files is\par
+echo $(ls)\par
+echo\par
+\par
+[swapnil.shinde@agni scripts]$ \highlight7 ./script1.sh\par
+\highlight2\par
+The current working directory is\par
+/home/swapnil.shinde/scripts\par
+\par
+The list of subdirectories and files is\par
+script1.sh script2.sh script3.sh testfile1 testfile2\par
+\highlight5\par
+2. write a bash script to print with tab delimited first 50 Fibonacci numbers in reverse directions\par
+\highlight2\par
+[swapnil.shinde@agni scripts]$ cat script2.sh\par
+#!/bin/bash\par
+a=0\par
+b=1\par
+declare -a arr\par
+arr[0]=0\par
+arr[1]=1\par
+\par
+for((i=2;i<50;i++))\par
+do\par
+c=$((a+b))\par
+arr[i]=$c\par
+a=$b\par
+b=$c\par
+done\par
+\par
+for((j=49;j>=0;j--))\par
+do\par
+echo "$\{arr[j]\}"\par
+done\par
+\par
+[swapnil.shinde@agni scripts]$ \highlight5 ./script2.sh\par
+\highlight2 7778742049\par
+4807526976\par
+2971215073\par
+1836311903\par
+1134903170\par
+701408733\par
+433494437\par
+267914296\par
+165580141\par
+102334155\par
+63245986\par
+39088169\par
+24157817\par
+14930352\par
+9227465\par
+5702887\par
+3524578\par
+2178309\par
+1346269\par
+832040\par
+514229\par
+317811\par
+196418\par
+121393\par
+75025\par
+46368\par
+28657\par
+17711\par
+10946\par
+6765\par
+4181\par
+2584\par
+1597\par
+987\par
+610\par
+377\par
+233\par
+144\par
+89\par
+55\par
+34\par
+21\par
+13\par
+8\par
+5\par
+3\par
+2\par
+1\par
+1\par
+0\par
+\highlight5\par
+3. write a bash script which takes a line as input and then print the same line in capital letters\par
+\fs28\par
+\highlight2\fs22 [swapnil.shinde@agni scripts]$ \highlight7 cat script3.sh\par
+\highlight2 #!/bin/bash\par
+echo Write a line\par
+read input\par
+echo $input | tr '[:lower:]' '[:upper:]'\par
+\par
+[swapnil.shinde@agni scripts]$ \highlight7 ./script3.sh\par
+\highlight2 Write a line\par
+My name is swapnil\par
+MY NAME IS SWAPNIL\par
+\highlight5\fs28\par
+\par
+\par
+\highlight12\fs44 Assignment 2\par
+\highlight5\fs24\par
+Exercise 01: \par
+\par
+Write a shell script that accepts a filename, starting and ending line numbers as arguments and displays all the lines between the given line numbers.\par
+\par
+\highlight2 [swapnil.shinde@agni scripts]$ \highlight7 cat e1.sh\par
+\highlight2 #!/bin/bash\par
+echo "Enter the filename"\par
+read file\par
+echo "Enter starting line number"\par
+read s\par
+echo "Enter ending line number"\par
+read e\par
+sed -n $s,$e\\p $file > op\par
+cat op\par
+\highlight5\par
+\highlight2 [swapnil.shinde@agni scripts]$ \highlight7 ./e1.sh\par
+\highlight2 Enter the filename\par
+script1.sh\par
+Enter starting line number\par
+1\par
+Enter ending line number\par
+5\par
+\highlight0 o/p-\highlight5\par
+\highlight2 #!/bin/bash\par
+echo\par
+echo The current working directory is\par
+echo $(pwd)\par
+echo\par
+\highlight5\par
+\tab Exercise 02:\par
+\tab\par
+\tab Write a shell script that deletes all lines containing a specified word in \par
+\tab one or more files supplied as arguments to it.\par
+\par
+\highlight2 [swapnil.shinde@agni scripts]$ \highlight13 cat e2.sh\par
+\highlight2 #!/bin/bash\par
+echo write all file names\par
+read files\par
+echo write word which you want to delete\par
+read word\par
+$(sed -ie /$word/d $files)\par
+\par
+[swapnil.shinde@agni scripts]$ \highlight13 cat t1\par
+\highlight2 hello line 1\par
+hello line 2\par
+hello line 3\par
+hello line 4\par
+hii line 6\par
+hii line 7\par
+hii line 8\par
+hii line 9\par
+\par
+[swapnil.shinde@agni scripts]$ \highlight13 ./e2.sh\par
+\highlight2 write all file names\par
+t1\par
+write word which you want to delete\par
+hello\par
+[swapnil.shinde@agni scripts]$ \highlight13 cat t1\par
+\highlight2 hii line 6\par
+hii line 7\par
+hii line 8\par
+hii line 9\par
+\highlight5\par
+\par
+Exercise 03: \par
+\par
+\tab Write a shell script that displays a list of all files in the current directory \par
+\tab to which the user has read, write and execute permissions.\par
+\par
+\highlight2 #!/bin/bash\par
+echo "List of files having read, write and execute permission\par
+\highlight0 loop through all files in current directoryfor file in \par
+\highlight2 for file in *\par
+do\par
+\highlight0 check if it is a file\highlight2\par
+if [ -f $file ]\par
+then\par
+\highlight0 check if it has all permissions\highlight2\par
+if [ -r $file -a -w $file -a -x $file ]\par
+then\par
+\highlight0 # print the complete file name with -l option\highlight2\par
+ls -l $file\par
+fi\par
+fi\par
+done\par
+\par
+[swapnil.shinde@agni scripts]$ \highlight5 ./e3.sh\par
+\highlight2 List of files having read, write and execute permission\par
+-rwxr--r-- 1 swapnil.shinde orcgroup 169 Jul 14 18:23 e1.sh\par
+-rwxr--r-- 1 swapnil.shinde orcgroup 135 Jul 15 10:51 e2.sh\par
+-rwxr--r-- 1 swapnil.shinde orcgroup 197 Jul 15 11:29 e3.sh\par
+-rwxr--r-- 1 swapnil.shinde orcgroup 134 Jul 15 10:45 script1.sh\par
+-rwxr--r-- 1 swapnil.shinde orcgroup 134 Jul 15 10:45 script1.she\par
+-rwxr--r-- 1 swapnil.shinde orcgroup 167 Jul 14 14:11 script2.sh\par
+-rwxr--r-- 1 swapnil.shinde orcgroup 85 Jul 14 14:20 script3.sh\par
+\highlight5\par
+\par
+Exercise 05: \par
+---------------\par
+\tab Write a shell script that receives any number of file names as \par
+\tab its arguments, counts and reports the occurrence of each word\par
+\tab that is present in the first argument file on other argument files.\par
+\par
+Exercise 06: \par
+---------------\par
+\tab Write a shell script to list all of the directory files in a directory\par
+\par
+\highlight2 [swapnil.shinde@agni scripts]$ \highlight13 cat e6.sh\par
+\highlight2 # !/bin/bash\par
+echo "list of files in the directory"\par
+ls -d */;\par
+\par
+[swapnil.shinde@agni scripts]$ \highlight13 ./e6.sh\par
+\highlight2 list of files in the directory\par
+directory1/  directory2/\par
+\highlight5\par
+\par
+Exercise 07: \par
+--------------\par
+\tab Write a shell script to find the factorial of a given number.\par
+\par
+\highlight2 [swapnil.shinde@agni scripts\highlight13 ]$ cat e7.sh\par
+\highlight2 #!/bin/bash\par
+echo "Enter a number"\par
+read n\par
+f=1\par
+while [ $n -gt 1 ]\par
+do\par
+  f=$((f * n))\par
+  n=$((n - 1))\par
+done\par
+echo The factorial of $n is\par
+echo $f\par
+\highlight0 eg\highlight2\par
+[swapnil.shinde@agni scripts]$ ./e7.sh\par
+Enter a number\par
+5\par
+The factorial of 5 is\par
+120\par
+\highlight5\par
+\par
+Exercise 08: \par
+\tab Write a shell script to check all the timestamp of a file.\par
+\par
+\highlight2 [swapnil.shinde@agni scripts]$ \highlight13 cat e8.sh\par
+\highlight2 #!/bin/bash\par
+echo "Enter file name"\par
+read file\par
+stat $file;\par
+\par
+[swapnil.shinde@agni scripts]$ \highlight13 ./e8.sh\par
+\highlight2 Enter file name\par
+e8.sh\par
+  File: \lquote e8.sh\rquote\par
+  Size: 58              Blocks: 8          IO Block: 4096   regular file\par
+Device: f900h/63744d    Inode: 233761682   Links: 1\par
+Access: (0744/-rwxr--r--)  Uid: (37929/swapnil.shinde)   Gid: (  410/orcgroup)\par
+Access: 2022-07-18 13:58:44.551558670 +0530\par
+Modify: 2022-07-18 13:58:42.818535926 +0530\par
+Change: 2022-07-18 13:58:42.820535952 +0530\par
+ Birth: -\par
+\highlight5\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\fs28\par
+\highlight0\par
+\par
+\fs22\par
+}
+ 
